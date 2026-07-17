@@ -52,125 +52,6 @@ This work provides:
 
 ---
 
-## Methodology
-
-### 1. Neural-Network Level-Set Representation
-
-The spatial coordinates of each point in the design domain are provided to a neural network:
-
-\[
-\mathbf{x} = (x,y).
-\]
-
-The neural network outputs the level-set values for all alloy phases and the void phase:
-
-\[
-\boldsymbol{\phi}(\mathbf{x};\boldsymbol{\theta})
-=
-\left[
-\phi_1(\mathbf{x}),
-\phi_2(\mathbf{x}),
-\ldots,
-\phi_M(\mathbf{x}),
-\phi_{\mathrm{void}}(\mathbf{x})
-\right],
-\]
-
-where:
-
-- \(M\) is the number of alloy phases;
-- \(\boldsymbol{\theta}\) denotes the trainable neural-network parameters; and
-- each output field controls the spatial distribution of one phase.
-
-Instead of optimizing every level-set value independently, the optimization updates the shared neural-network parameters.
-
----
-
-### 2. Unified Loss Function
-
-The optimization problem is formulated as the minimization of a unified loss:
-
-\[
-\mathcal{L}
-=
-W_J \mathcal{L}_{\mathrm{struct}}
-+
-W_V \mathcal{L}_{\mathrm{volume}}
-+
-W_C \mathcal{L}_{\mathrm{compatibility}}
-+
-W_R \mathcal{L}_{\mathrm{regularization}},
-\]
-
-where:
-
-- \(\mathcal{L}_{\mathrm{struct}}\) represents the structural objective, such as compliance;
-- \(\mathcal{L}_{\mathrm{volume}}\) enforces material-volume requirements;
-- \(\mathcal{L}_{\mathrm{compatibility}}\) promotes feasible graded-alloy transitions;
-- \(\mathcal{L}_{\mathrm{regularization}}\) controls geometric complexity and interface smoothness; and
-- \(W_J\), \(W_V\), \(W_C\), and \(W_R\) are weighting coefficients.
-
-A representative augmented-Lagrangian form for the volume constraints is
-
-\[
-\mathcal{L}_{\mathrm{volume}}
-=
-\sum_{i=1}^{M}
-\left[
-\lambda_i \left(V_i-V_{i,\max}\right)
-+
-\frac{\mu_i}{2}
-\left(V_i-V_{i,\max}\right)^2
-\right].
-\]
-
----
-
-### 3. Alloy-Hierarchy Constraint
-
-To prevent incompatible alloys from being placed in direct contact, the alloy phases can be arranged according to a predefined compatible sequence.
-
-A representative hierarchy loss is
-
-\[
-\mathcal{L}_{\mathrm{hier}}
-=
-\sum_{i=2}^{M}
-\frac{1}{|D|}
-\int_D
-\left[
-\phi_i(\mathbf{x})
--
-\left(\phi_{i-1}(\mathbf{x})-d_i\right)
-\right]_+^2
-\,d\Omega,
-\]
-
-where:
-
-- \([x]_+ = \max(0,x)\);
-- \(d_i\) controls the required separation or ordering between neighboring level-set fields; and
-- the penalty discourages violations of the prescribed alloy hierarchy.
-
-This formulation promotes gradual and metallurgically feasible transitions between neighboring alloy compositions.
-
----
-
-### 4. Finite-Element Analysis
-
-For each optimization iteration:
-
-1. The neural network predicts all level-set fields.
-2. The level-set outputs are converted into phase indicators or material fractions.
-3. Element stiffness properties are assembled from the local phase distribution.
-4. The finite-element equilibrium problem is solved.
-5. Structural responses, such as displacement, compliance, and stress, are evaluated.
-6. The total loss is computed.
-7. Gradients of the loss with respect to the neural-network parameters are obtained by backpropagation.
-8. The network parameters are updated using a gradient-based optimizer.
-
----
-
 ## Computational Workflow
 
 ```text
@@ -207,7 +88,6 @@ Design coordinates and material properties
  Optimized topology and graded-alloy distribution
 ```
 
----
 
 ## Comparison with the Original MATO Method
 
@@ -223,86 +103,6 @@ Design coordinates and material properties
 
 ---
 
-## Repository Structure
-
-A possible repository layout is:
-
-```text
-.
-├── README.md
-├── main.py
-├── config.py
-├── models/
-│   └── level_set_network.py
-├── fem/
-│   ├── mesh.py
-│   ├── stiffness.py
-│   └── solver.py
-├── optimization/
-│   ├── loss_functions.py
-│   ├── constraints.py
-│   └── train.py
-├── material_data/
-│   └── alloy_properties.csv
-├── examples/
-├── results/
-└── requirements.txt
-```
-
-Modify this section to match the actual repository structure.
-
----
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone <repository-url>
-cd <repository-name>
-```
-
-Create and activate a Python environment, then install the required packages:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-For Windows:
-
-```bash
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
-
----
-
-## Running the Code
-
-A typical execution command is:
-
-```bash
-python main.py
-```
-
-Before running the optimization, review the configuration file and specify:
-
-- design-domain dimensions;
-- mesh resolution;
-- boundary conditions;
-- applied loads;
-- candidate alloy properties;
-- compatible alloy sequence;
-- volume limits;
-- neural-network architecture;
-- learning rate;
-- penalty weights;
-- convergence criteria; and
-- output frequency.
-
----
 
 ## Expected Outputs
 
@@ -323,7 +123,8 @@ Example:
 
 ```html
 <p align="center">
-  <img width="900" alt="NN-based multi-alloy topology optimization result" src="PASTE_IMAGE_URL_HERE">
+  <img width="900" alt="NN-based multi-alloy topology optimization result" src=<img width="772" height="305" alt="Screenshot 2026-07-17 at 2 49 16 PM" src="https://github.com/user-attachments/assets/157d1d94-cde2-48e5-bd1c-eb748335b7af" />'
+">
 </p>
 ```
 
