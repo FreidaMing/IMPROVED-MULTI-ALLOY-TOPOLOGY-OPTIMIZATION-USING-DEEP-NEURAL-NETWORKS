@@ -119,18 +119,17 @@ The framework can generate:
 - von Mises stress distribution; and
 - computational-efficiency comparisons with the original MATO method.
 
-Example:
+## Results
 
-```html
+The optimized NN-based multi-alloy topology is shown below.
+
 <p align="center">
-  <img width="900" alt="NN-based multi-alloy topology optimization result" src=<img width="772" height="305" alt="Screenshot 2026-07-17 at 2 49 16 PM" src="https://github.com/user-attachments/assets/157d1d94-cde2-48e5-bd1c-eb748335b7af" />'
-">
+  <img
+    width="772"
+    alt="NN-based multi-alloy topology optimization result"
+    src="https://github.com/user-attachments/assets/157d1d94-cde2-48e5-bd1c-eb748335b7af"
+  >
 </p>
-```
-
-Replace `PASTE_IMAGE_URL_HERE` with the GitHub-generated image URL.
-
----
 
 ## Numerical Studies
 
@@ -182,7 +181,7 @@ This repository supports the work:
 
 > **A Neural Network-Based Level-Set Method for Enforcing Alloy Compatibility in Multi-Alloy Topology Optimization**
 
-Replace the placeholder information below with the final publication record:
+
 
 ```bibtex
 @inproceedings{shu_nn_mato,
@@ -214,12 +213,3 @@ Email: `shuyl@tamu.edu`
 
 ---
 
-## License
-
-Add the license approved for this repository, such as the MIT License or BSD 3-Clause License.
-
----
-
-## Disclaimer
-
-This repository contains research code developed for academic use. Results may depend on mesh resolution, neural-network architecture, initialization, loss weights, optimization settings, material data, and alloy-compatibility assumptions. All results should be independently verified before engineering or manufacturing use.
